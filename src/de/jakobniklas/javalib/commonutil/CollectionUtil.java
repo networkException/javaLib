@@ -22,6 +22,6 @@ public class CollectionUtil
     public static <T> void addOrImplementation(List<T> list, T value, ListOrImplementation implementation)
     {
         if(!list.contains(value)) {list.add(value);}
-        else {implementation.or(list, value);}
+        else {implementation.or((List<Object>) list, value);}
     }
 }
