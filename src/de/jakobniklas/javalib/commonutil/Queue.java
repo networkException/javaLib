@@ -1,12 +1,12 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.commonutil.actions.Action;
+import de.jakobniklas.javalib.commonutil.actions.Action;
 
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class to {@link Iterator iterate} over a {@link List list} of {@link de.jakobniklas.applicationlib.commonutil.actions.Action
+ * Class to {@link Iterator iterate} over a {@link List list} of {@link de.jakobniklas.javalib.commonutil.actions.Action
  * actions}
  *
  * @author Jakob-Niklas
@@ -18,7 +18,7 @@ import java.util.List;
 public class Queue
 {
     /**
-     * Actionlist containing the remaining {@link de.jakobniklas.applicationlib.commonutil.actions.Action actions}
+     * ActionList containing the remaining {@link de.jakobniklas.javalib.commonutil.actions.Action actions}
      *
      * @see #addNew(Action)
      */
@@ -27,7 +27,7 @@ public class Queue
     /**
      * Constructor to create a new queue object
      *
-     * @param list Implementet {@link List list} of the type {@link de.jakobniklas.applicationlib.commonutil.actions.Action
+     * @param list Implemented {@link List list} of the type {@link de.jakobniklas.javalib.commonutil.actions.Action
      *             Action}. Use "{@code new ArrayList<de.jakobniklas.util.actions.Action>()}" to create new queue list
      */
     public Queue(List<Action> list)
@@ -36,8 +36,8 @@ public class Queue
     }
 
     /**
-     * Iterates over any remaining {@link de.jakobniklas.applicationlib.commonutil.actions.Action actions} in the {@link
-     * #list actionList} and calles the {@link de.jakobniklas.applicationlib.commonutil.actions.Action#perform()
+     * Iterates over any remaining {@link de.jakobniklas.javalib.commonutil.actions.Action actions} in the {@link
+     * #list actionList} and calls the {@link de.jakobniklas.javalib.commonutil.actions.Action#perform()
      * perform()} method of each action
      */
     public void iterate()
@@ -54,7 +54,7 @@ public class Queue
     }
 
     /**
-     * Adds new {@link de.jakobniklas.applicationlib.commonutil.actions.Action action} to the {@link #list actionList}
+     * Adds new {@link de.jakobniklas.javalib.commonutil.actions.Action action} to the {@link #list actionList}
      *
      * @param action Used implementation of an action object
      */

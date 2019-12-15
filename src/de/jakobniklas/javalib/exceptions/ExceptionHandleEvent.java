@@ -2,7 +2,7 @@ package de.jakobniklas.javalib.exceptions;
 
 /**
  * A class to be implemented which is a custom handler for exception. If registered can be called by {@link
- * de.jakobniklas.applicationlib.exceptions.Exceptions#customHandle(Exception)}
+ * de.jakobniklas.javalib.exceptions.Exceptions#customHandle(Exception)}
  *
  * @author Jakob-Niklas See
  * @see #handle(Exception)

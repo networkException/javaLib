@@ -1,11 +1,12 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.exceptions.Exceptions;
+import de.jakobniklas.javalib.exceptions.Exceptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Class for String formatting and detection
@@ -75,14 +76,7 @@ public class FormatUtil
      */
     public static boolean isBoolean(String string)
     {
-        if(string.equals("true") || string.equals("false"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return string.equals("true") || string.equals("false");
     }
 
     /**
@@ -97,14 +91,7 @@ public class FormatUtil
      */
     public static boolean matchesRegex(String string, String regex)
     {
-        if(string.matches(regex))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return string.matches(regex);
     }
 
     /**
@@ -116,7 +103,7 @@ public class FormatUtil
      */
     public static String streamToString(InputStream inputStream)
     {
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8")))
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
         {
             String inputLine;
             StringBuilder stringBuilder = new StringBuilder();

@@ -1,7 +1,7 @@
 package de.jakobniklas.javalib.exceptions;
 
-import de.jakobniklas.applicationlib.JakobniklasApplicationLibaryException;
-import de.jakobniklas.applicationlib.commonutil.Log;
+import de.jakobniklas.javalib.JavaLibException;
+import de.jakobniklas.javalib.commonutil.Log;
 
 /**
  * Class to handle any {@link Exception Exception} occurring
@@ -30,10 +30,10 @@ public class Exceptions
     }
 
     /**
-     * Handles events by calling implemented method {@link de.jakobniklas.applicationlib.exceptions.ExceptionHandleEvent#handle(Exception)
+     * Handles events by calling implemented method {@link de.jakobniklas.javalib.exceptions.ExceptionHandleEvent#handle(Exception)
      * handle(Exception)}
      * <p>
-     * Throws new {@link de.jakobniklas.applicationlib.exceptions.NoCustomExceptionsHandlerRegisteredException
+     * Throws new {@link de.jakobniklas.javalib.exceptions.NoCustomExceptionsHandlerRegisteredException
      * NoCustomExceptionsHandlerRegisteredException} if no custom handler was set before
      *
      * @param e exception to be handled
@@ -54,15 +54,15 @@ public class Exceptions
 
     /**
      * Handles exception occurring by accepting a message and throwing a new {@link
-     * de.jakobniklas.applicationlib.JakobniklasApplicationLibaryException ScrapeNodeException} and {@link
-     * de.jakobniklas.applicationlib.commonutil.Log logging} with the parameter 'Exception'
+     * de.jakobniklas.javalib.JavaLibException JavaLibException} and {@link
+     * de.jakobniklas.javalib.commonutil.Log logging} with the parameter 'Exception'
      *
-     * @param message message for the {@link de.jakobniklas.applicationlib.JakobniklasApplicationLibaryException
-     *                ScrapeNodeException}
+     * @param message message for the {@link de.jakobniklas.javalib.JavaLibException
+     *                JavaLibException}
      */
     public static void handle(String message)
     {
-        Exception e = new JakobniklasApplicationLibaryException(message);
+        Exception e = new JavaLibException(message);
         handle(e);
     }
 

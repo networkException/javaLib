@@ -1,6 +1,6 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.exceptions.Exceptions;
+import de.jakobniklas.javalib.exceptions.Exceptions;
 
 import java.net.MalformedURLException;
 import java.net.URL;

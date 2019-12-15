@@ -1,7 +1,7 @@
-package de.jakobniklas.javalib.commonutil.subclasses;
+package de.jakobniklas.javalib.commonutil.subclasses.log;
 
 /**
- * Class to define the pattern used in {@link de.jakobniklas.applicationlib.commonutil.Log#print(String, String)}
+ * Class to define the pattern used in {@link de.jakobniklas.javalib.commonutil.Log#print(String, String)}
  * Log.print()}
  *
  * @author Jakob-Niklas See

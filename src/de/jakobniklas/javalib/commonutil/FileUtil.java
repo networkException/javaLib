@@ -1,17 +1,22 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.commonutil.subclasses.FileInputIterator;
-import de.jakobniklas.applicationlib.commonutil.subclasses.FileOutputIterator;
-import de.jakobniklas.applicationlib.commonutil.subclasses.IteratorOutputRegistry;
-import de.jakobniklas.applicationlib.exceptions.Exceptions;
+import de.jakobniklas.javalib.commonutil.subclasses.file.DirectoryIterator;
+import de.jakobniklas.javalib.commonutil.subclasses.file.DirectoryIteratorFilter;
+import de.jakobniklas.javalib.commonutil.subclasses.file.FileInputIterator;
+import de.jakobniklas.javalib.commonutil.subclasses.file.FileOutputIterator;
+import de.jakobniklas.javalib.exceptions.Exceptions;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Class to interact with the file system
@@ -19,10 +24,10 @@ import java.util.List;
  * @author Jakob-Niklas See
  * @see #getTextContent(File)
  * @see #getTextContent(String)
- * @see #fileInputIterator(File, FileInputIterator, IteratorOutputRegistry)
- * @see #fileInputIterator(String, FileInputIterator, IteratorOutputRegistry)
- * @see #fileOutputIterator(File, List, boolean)
- * @see #fileOutputIterator(String, List, boolean)
+ * @see #fileInputIterator(File, FileInputIterator)
+ * @see #fileInputIterator(String, FileInputIterator)
+ * @see #fileOutputIterator(File, List, Boolean)
+ * @see #fileOutputIterator(String, List, Boolean)
  * @see #setTextContent(File, String)
  * @see #setTextContent(String, String)
  * @see #getAbsolutePath(String)
@@ -40,25 +45,11 @@ public class FileUtil
      */
     public static String getTextContent(File file)
     {
-        String content = "";
+        StringBuilder content = new StringBuilder();
 
-        IteratorOutputRegistry outputRegistry = new IteratorOutputRegistry<String>();
+        fileInputIterator(file, (line, lineNumber) -> content.append(line).append(System.lineSeparator()));
 
-        fileInputIterator(file, new FileInputIterator()
-        {
-            @Override
-            public void action(String line, int lineNumber, IteratorOutputRegistry iteratorOutputRegistry)
-            {
-                iteratorOutputRegistry.store(line + System.lineSeparator());
-            }
-        }, outputRegistry);
-
-        for(String string : (List<String>) outputRegistry.getAll())
-        {
-            content = content.concat(string);
-        }
-
-        return content;
+        return content.toString();
     }
 
     /**
@@ -76,16 +67,14 @@ public class FileUtil
     }
 
     /**
-     * Iterates over a given file and executes {@link de.jakobniklas.applicationlib.commonutil.subclasses.FileInputIterator#action(String,
-     * int, IteratorOutputRegistry)}
+     * Iterates over a given file and executes {@link FileInputIterator#action(String, Integer)}
      *
-     * @param file                   The given file to be iterated over
-     * @param iterator               The implemented iterator to be called
-     * @param iteratorOutputRegistry Stores output from the iterator
+     * @param file     The given file to be iterated over
+     * @param iterator The implemented iterator to be called
      *
-     * @see #fileInputIterator(String, FileInputIterator, IteratorOutputRegistry)
+     * @see #fileInputIterator(String, FileInputIterator)
      */
-    public static void fileInputIterator(File file, FileInputIterator iterator, IteratorOutputRegistry iteratorOutputRegistry)
+    public static void fileInputIterator(File file, FileInputIterator iterator)
     {
         try
         {
@@ -96,7 +85,7 @@ public class FileUtil
 
             while((line = br.readLine()) != null)
             {
-                iterator.action(line, count, iteratorOutputRegistry);
+                iterator.action(line, count);
 
                 count++;
             }
@@ -111,47 +100,50 @@ public class FileUtil
     }
 
     /**
-     * Iterates over a given file and executes {@link de.jakobniklas.applicationlib.commonutil.subclasses.FileInputIterator#action(String,
-     * int, IteratorOutputRegistry)}
+     * Iterates over a given file and executes {@link FileInputIterator#action(String, Integer)}
      *
-     * @param filepath               The given path and name of the file to be iterated over
-     * @param iterator               The implemented iterator to be called
-     * @param iteratorOutputRegistry Stores output from the iterator
+     * @param filepath The given path and name of the file to be iterated over
+     * @param iterator The implemented iterator to be called
      *
-     * @see #fileInputIterator(File, FileInputIterator, IteratorOutputRegistry)
+     * @see #fileInputIterator(File, FileInputIterator)
      */
-    public static void fileInputIterator(String filepath, FileInputIterator iterator, IteratorOutputRegistry iteratorOutputRegistry)
+    public static void fileInputIterator(String filepath, FileInputIterator iterator)
     {
-        fileInputIterator(new File(filepath), iterator, iteratorOutputRegistry);
+        fileInputIterator(new File(filepath), iterator);
     }
 
     /**
      * Iterates over the given iterators and appends the return value to a given file
      *
      * @param file      The given file to append to
-     * @param iterators The implemented list of {@link de.jakobniklas.applicationlib.commonutil.subclasses.FileOutputIterator}
+     * @param iterators The implemented list of {@link FileOutputIterator}
      * @param overwrite Toggles to overwrite the files content
      *
-     * @see #fileOutputIterator(String, List, boolean)
+     * @see #fileOutputIterator(String, List, Boolean)
      */
-    public static void fileOutputIterator(File file, List<FileOutputIterator> iterators, boolean overwrite)
+    public static void fileOutputIterator(File file, List<FileOutputIterator> iterators, Boolean overwrite)
     {
         try
         {
             FileWriter fileWriter = new FileWriter(file);
-            int count = 0;
+            AtomicInteger count = new AtomicInteger(0);
 
             if(overwrite)
             {
                 fileWriter.write("");
             }
 
-            for(FileOutputIterator iterator : iterators)
+            iterators.forEach((iterator) ->
             {
-                fileWriter.append(iterator.action(count));
-
-                count++;
-            }
+                try
+                {
+                    fileWriter.append(iterator.action(count.getAndIncrement()));
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+            });
 
             fileWriter.close();
         }
@@ -165,12 +157,12 @@ public class FileUtil
      * Iterates over the given iterators and appends the return value to a given file
      *
      * @param filepath  The given path and name of the file to append to
-     * @param iterators The implemented list of {@link de.jakobniklas.applicationlib.commonutil.subclasses.FileOutputIterator}
+     * @param iterators The implemented list of {@link FileOutputIterator}
      * @param overwrite Toggles to overwrite the files content
      *
-     * @see #fileOutputIterator(String, List, boolean)
+     * @see #fileOutputIterator(String, List, Boolean)
      */
-    public static void fileOutputIterator(String filepath, List<FileOutputIterator> iterators, boolean overwrite)
+    public static void fileOutputIterator(String filepath, List<FileOutputIterator> iterators, Boolean overwrite)
     {
         fileOutputIterator(new File(filepath), iterators, overwrite);
     }
@@ -185,14 +177,7 @@ public class FileUtil
      */
     public static void setTextContent(File file, String content)
     {
-        fileOutputIterator(file, new ArrayList<>(Collections.singleton(new FileOutputIterator()
-        {
-            @Override
-            public String action(int lineNumber)
-            {
-                return content;
-            }
-        })), true);
+        fileOutputIterator(file, new ArrayList<>(Collections.singleton(lineNumber -> content)), true);
     }
 
     /**
@@ -218,5 +203,53 @@ public class FileUtil
     public static String getAbsolutePath(String fileName)
     {
         return System.getProperty("user.dir") + File.separator + fileName + File.separator;
+    }
+
+    /**
+     * Iterates over a directory and running the iterator on every file
+     *
+     * @param directory The file of the directory to iterate over
+     * @param iterator  The iterator implementation (can be a lambda expression)
+     */
+    public static void directoryIterator(File directory, DirectoryIterator iterator)
+    {
+        Arrays.asList(Objects.requireNonNull(directory.listFiles())).forEach((file) -> iterator.file(file.getName(), file));
+    }
+
+    /**
+     * Iterates over a directory and running the iterator on every file
+     *
+     * @param directory The path to the directory to iterate over
+     * @param iterator  The iterator implementation (can be a lambda expression)
+     */
+    public static void directoryIterator(String directory, DirectoryIterator iterator)
+    {
+        directoryIterator(new File(directory), iterator);
+    }
+
+    /**
+     * Iterates over a directory and running the iterator on every file. The implemented filter deferments if the file
+     * gets iterated over
+     *
+     * @param directory The file of the directory to iterate over
+     * @param filter    The filer implementation (can be a lambda expression)
+     * @param iterator  The iterator implementation (can be a lambda expression)
+     */
+    public static void directoryIterator(File directory, DirectoryIteratorFilter filter, DirectoryIterator iterator)
+    {
+        Arrays.stream(Objects.requireNonNull(directory.listFiles())).filter(filter::predicate).forEach((file) -> iterator.file(file.getName(), file));
+    }
+
+    /**
+     * Iterates over a directory and running the iterator on every file. The implemented filter deferments if the file
+     * gets iterated over
+     *
+     * @param directory The path to the directory to iterate over
+     * @param filter    The filer implementation (can be a lambda expression)
+     * @param iterator  The iterator implementation (can be a lambda expression)
+     */
+    public static void directoryIterator(String directory, DirectoryIteratorFilter filter, DirectoryIterator iterator)
+    {
+        directoryIterator(new File(directory), filter, iterator);
     }
 }

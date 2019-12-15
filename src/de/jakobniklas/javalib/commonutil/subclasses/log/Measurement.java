@@ -1,4 +1,4 @@
-package de.jakobniklas.javalib.commonutil.subclasses;
+package de.jakobniklas.javalib.commonutil.subclasses.log;
 
 public class Measurement
 {

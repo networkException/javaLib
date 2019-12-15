@@ -1,17 +1,18 @@
 package de.jakobniklas.javalib.commonutil.actions;
 
 /**
- * Abstract class to be implemented by any in a {@link de.jakobniklas.applicationlib.commonutil.Queue Queue} performable
+ * Functional interface to be implemented by any in a {@link de.jakobniklas.javalib.commonutil.Queue Queue} performable
  * action
  *
  * @author Jakob-Niklas See
  * @see #perform()
  */
-public abstract class Action
+@FunctionalInterface
+public interface Action
 {
     /**
-     * Abstract method which is being called by the {@link de.jakobniklas.applicationlib.commonutil.Queue#iterate()
+     * Abstract method which is being called by the {@link de.jakobniklas.javalib.commonutil.Queue#iterate()
      * queue-iterator} method
      */
-    public abstract void perform();
+    void perform();
 }

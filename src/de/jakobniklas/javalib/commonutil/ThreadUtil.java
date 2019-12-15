@@ -1,6 +1,6 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.exceptions.Exceptions;
+import de.jakobniklas.javalib.exceptions.Exceptions;
 
 /**
  * Class used to interact with the {@link Thread Thread} of the class which is calling this classes methods
@@ -8,9 +8,9 @@ import de.jakobniklas.applicationlib.exceptions.Exceptions;
  * @author Jakob-Niklas See
  * @see #defaultSleep
  * @see #sleep()
- * @see #sleep(int)
+ * @see #sleep(Integer)
  * @see #getDefaultSleep()
- * @see #setDefaultSleep(int)
+ * @see #setDefaultSleep(Integer)
  */
 public class ThreadUtil
 {
@@ -18,7 +18,7 @@ public class ThreadUtil
      * Default sleep duration in milliseconds. Used in {@link #sleep()}
      *
      * @see #getDefaultSleep()
-     * @see #setDefaultSleep(int)
+     * @see #setDefaultSleep(Integer)
      */
     private static int defaultSleep = 10;
 
@@ -30,7 +30,7 @@ public class ThreadUtil
      *
      * @see #sleep()
      */
-    public static void sleep(int ms)
+    public static void sleep(Integer ms)
     {
         try
         {
@@ -45,7 +45,7 @@ public class ThreadUtil
     /**
      * Pauses the {@link Thread Thread} of the calling class for the {@link #defaultSleep} amount of milliseconds
      *
-     * @see #sleep(int)
+     * @see #sleep(Integer)
      */
     public static void sleep()
     {
@@ -55,7 +55,7 @@ public class ThreadUtil
     /**
      * @return {@link #defaultSleep}
      */
-    public static int getDefaultSleep()
+    public static Integer getDefaultSleep()
     {
         return defaultSleep;
     }
@@ -63,7 +63,7 @@ public class ThreadUtil
     /**
      * @param defaultSleep {@link #defaultSleep}
      */
-    public static void setDefaultSleep(int defaultSleep)
+    public static void setDefaultSleep(Integer defaultSleep)
     {
         ThreadUtil.defaultSleep = defaultSleep;
     }

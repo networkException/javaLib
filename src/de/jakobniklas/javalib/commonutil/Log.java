@@ -1,13 +1,13 @@
 package de.jakobniklas.javalib.commonutil;
 
-
-import de.jakobniklas.applicationlib.commonutil.subclasses.LogSection;
-import de.jakobniklas.applicationlib.commonutil.subclasses.Measurement;
+import de.jakobniklas.javalib.commonutil.subclasses.log.LogSection;
+import de.jakobniklas.javalib.commonutil.subclasses.log.Measurement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Logging class, used to write to {@link System#out}
@@ -21,7 +21,7 @@ import java.util.Map;
  * @see #measureTime(String, String)
  * @see #print(String)
  * @see #print(String, String)
- * @see #setLogPointer(char)
+ * @see #setLogPointer(Character)
  */
 public class Log
 {
@@ -29,9 +29,9 @@ public class Log
      * Character which can be positioned with the tag '#logpointer' in the {@link #logSections}
      *
      * @see #getLogPointer()
-     * @see #setLogPointer(char)
+     * @see #setLogPointer(Character)
      */
-    private static char logPointer = '>';
+    private static Character logPointer = '>';
 
     /**
      * List of {@link LogSection LogSections} which define the arrangement of values in the output of a 'Log.print()'
@@ -166,22 +166,22 @@ public class Log
         String output = "";
         int count = 0;
 
-        StackTraceElement callerCallerElement = ClassUtil.firstNotClassElement("java.lang.Thread", "de.jakobniklas.applicationlib.commonutil.ClassUtil", "de.jakobniklas.applicationlib.commonutil.Log");
+        StackTraceElement callerCallerElement = ClassUtil.firstNotClassElement("java.lang.Thread", "de.jakobniklas.javaLib.commonutil.ClassUtil", "de.jakobniklas.javaLib.commonutil.Log");
 
         for(LogSection logSection : replacedSections)
         {
             logSection.setPattern(logSection.getPattern().
-                    replace("#date", TimeUtil.getDate()).
-                    replace("#time", TimeUtil.getTime()).
-                    replace("#prefix", prefix).
-                    replace("#message", input).
-                    replace("#milliseconds", String.valueOf(System.currentTimeMillis())).
-                    replace("#class", callerCallerElement.getClassName()).
-                    replace("#logpointer", String.valueOf(logPointer)).
-                    replace("#thread", Thread.currentThread().getName()).
-                    replace("#method", callerCallerElement.getMethodName()).
-                    replace("#line", String.valueOf(callerCallerElement.getLineNumber())).
-                    replace("#file", callerCallerElement.getFileName()));
+                replace("#date", TimeUtil.getDate()).
+                replace("#time", TimeUtil.getTime()).
+                replace("#prefix", prefix).
+                replace("#message", input).
+                replace("#milliseconds", String.valueOf(System.currentTimeMillis())).
+                replace("#class", callerCallerElement.getClassName()).
+                replace("#logpointer", String.valueOf(logPointer)).
+                replace("#thread", Thread.currentThread().getName()).
+                replace("#method", callerCallerElement.getMethodName()).
+                replace("#line", String.valueOf(callerCallerElement.getLineNumber())).
+                replace("#file", Objects.requireNonNull(callerCallerElement.getFileName())));
 
             logSection.setLength(logSection.getPattern().length());
 
@@ -233,7 +233,7 @@ public class Log
     /**
      * @param logPointer {@link #logPointer}
      */
-    public static void setLogPointer(char logPointer)
+    public static void setLogPointer(Character logPointer)
     {
         Log.logPointer = logPointer;
     }

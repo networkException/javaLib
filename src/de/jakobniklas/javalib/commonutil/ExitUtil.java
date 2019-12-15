@@ -1,12 +1,12 @@
 package de.jakobniklas.javalib.commonutil;
 
-import de.jakobniklas.applicationlib.commonutil.subclasses.ExitHandleRegistry;
+import de.jakobniklas.javalib.commonutil.subclasses.exit.ExitHandleRegistry;
 
 /**
  * A class for handling quiting of the application
  *
  * @author Jakob-Niklas See
- * @see #exit(int)
+ * @see #exit(Integer)
  * @see #exit()
  * @see ExitHandleRegistry
  * @see #exitHandleRegistry
@@ -27,7 +27,7 @@ public class ExitUtil
      *
      * @param errorCode the errorcode
      */
-    public static void exit(int errorCode)
+    public static void exit(Integer errorCode)
     {
         exitHandleRegistry.handleRegisteredEvents();
 

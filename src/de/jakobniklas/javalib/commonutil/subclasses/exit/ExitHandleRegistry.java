@@ -1,7 +1,9 @@
-package de.jakobniklas.javalib.commonutil.subclasses;
+package de.jakobniklas.javalib.commonutil.subclasses.exit;
 
-import de.jakobniklas.applicationlib.exceptions.Exceptions;
-import de.jakobniklas.applicationlib.exceptions.ExitHandleEventAlreadyRegisteredException;
+import de.jakobniklas.javalib.commonutil.CollectionUtil;
+import de.jakobniklas.javalib.commonutil.subclasses.collection.ListOrImplementation;
+import de.jakobniklas.javalib.exceptions.Exceptions;
+import de.jakobniklas.javalib.exceptions.ExitHandleEventAlreadyRegisteredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,37 +32,27 @@ public class ExitHandleRegistry
         registeredEvents = new ArrayList<>();
     }
 
-
     /**
      * goes threw each registered event and executes the implemented method, gets called by {@link
-     * de.jakobniklas.applicationlib.commonutil.ExitUtil ExitUtil}
+     * de.jakobniklas.javalib.commonutil.ExitUtil ExitUtil}
      */
     public void handleRegisteredEvents()
     {
-        for(ExitHandleEvent event : registeredEvents)
-        {
-            event.handle();
-        }
+        registeredEvents.forEach(ExitHandleEvent::handle);
     }
 
     /**
      * registers a {@link ExitHandleEvent ExitHandleEvent} to be called by {@link #handleRegisteredEvents()}
      * <p>
-     * Throws a new {@link de.jakobniklas.applicationlib.exceptions.ExitHandleEventAlreadyRegisteredException
-     * ExitHandleEventAlreadyRegisteredException} (handled by {@link de.jakobniklas.applicationlib.exceptions.Exceptions
+     * Throws a new {@link de.jakobniklas.javalib.exceptions.ExitHandleEventAlreadyRegisteredException
+     * ExitHandleEventAlreadyRegisteredException} (handled by {@link de.jakobniklas.javalib.exceptions.Exceptions
      * Exceptions})
      *
      * @param event the implemented event to be registered
      */
     public void register(ExitHandleEvent event)
     {
-        if(!registeredEvents.contains(event))
-        {
-            registeredEvents.add(event);
-        }
-        else
-        {
-            Exceptions.handle(new ExitHandleEventAlreadyRegisteredException(event.getName()));
-        }
+        CollectionUtil.addOrImplementation(registeredEvents, event, (list, value) ->
+            Exceptions.handle(new ExitHandleEventAlreadyRegisteredException(event.getClass().getName())));
     }
 }
