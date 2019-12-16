@@ -166,7 +166,7 @@ public class Log
         String output = "";
         int count = 0;
 
-        StackTraceElement callerCallerElement = ClassUtil.firstNotClassElement("java.lang.Thread", "de.jakobniklas.javaLib.commonutil.ClassUtil", "de.jakobniklas.javaLib.commonutil.Log");
+        StackTraceElement callerCallerElement = ClassUtil.firstNotClassElement("java.lang.Thread", "de.jakobniklas.javalib.commonutil.ClassUtil", "de.jakobniklas.javalib.commonutil.Log");
 
         for(LogSection logSection : replacedSections)
         {
