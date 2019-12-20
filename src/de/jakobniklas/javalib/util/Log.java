@@ -147,9 +147,19 @@ public class Log
         print(prefix, String.valueOf(message));
     }
 
+    public static void print(LogLevel level, String prefix, Object message)
+    {
+        print(level, prefix, String.valueOf(message));
+    }
+
     public static void print(Object message)
     {
         print(String.valueOf(message));
+    }
+
+    public static void print(LogLevel level, Object message)
+    {
+        print(level, String.valueOf(message));
     }
 
     public static void print(String prefix, String message, Object... args)
@@ -157,9 +167,19 @@ public class Log
         print(prefix, String.format(message, args));
     }
 
+    public static void print(LogLevel level, String prefix, String message, Object... args)
+    {
+        print(level, prefix, String.format(message, args));
+    }
+
     public static void print(String message, Object... args)
     {
         print(String.format(message, args));
+    }
+
+    public static void print(LogLevel level, String message, Object... args)
+    {
+        print(level, String.format(message, args));
     }
 
     public static void print(String message)
@@ -168,6 +188,14 @@ public class Log
         sections.replace("message", message);
 
         print(sections);
+    }
+
+    public static void print(LogLevel level, String message)
+    {
+        Map<String, String> sections = defaultSections();
+        sections.replace("message", message);
+
+        print(level, sections);
     }
 
     public static void print(String prefix, String message)
@@ -179,12 +207,29 @@ public class Log
         print(sections);
     }
 
+    public static void print(LogLevel level, String prefix, String message)
+    {
+        Map<String, String> sections = defaultSections();
+        sections.replace("prefix", prefix);
+        sections.replace("message", message);
+
+        print(level, sections);
+    }
+
     public static void print(LogSection... logSections)
     {
         Map<String, String> sections = defaultSections();
         Arrays.asList(logSections).forEach((logSection) -> sections.replace(logSection.getKey(), logSection.getValue()));
 
         print(sections);
+    }
+
+    public static void print(LogLevel level, LogSection... logSections)
+    {
+        Map<String, String> sections = defaultSections();
+        Arrays.asList(logSections).forEach((logSection) -> sections.replace(logSection.getKey(), logSection.getValue()));
+
+        print(level, sections);
     }
 
     public static void print(Map<String, String> logSections)
