@@ -1,5 +1,8 @@
 package de.jakobniklas.javalib.util;
 
+import de.jakobniklas.javalib.collection.CollectionUtil;
+import de.jakobniklas.javalib.util.subclasses.log.LevelImplementation;
+import de.jakobniklas.javalib.util.subclasses.log.LogLevel;
 import de.jakobniklas.javalib.util.subclasses.log.LogPattern;
 import de.jakobniklas.javalib.util.subclasses.log.LogSection;
 import de.jakobniklas.javalib.util.subclasses.log.Measurement;
@@ -27,33 +30,11 @@ public class Log
      */
     private static Character logPointer = '>';
 
-    /**
-     * List of {@link LogPattern LogSections} which define the arrangement of values in the output of a 'Log.print()'
-     * method call.
-     * <br><br>
-     * Tags:
-     * <br> #date - date in the format specified in '{@link TimeUtil#getDate()
-     * getDate()}'
-     * <br> #time - time in the format specified in '{@link TimeUtil#getTime()
-     * getTime()}'
-     * <br> #milliseconds - number with type long as return value from '{@link System#currentTimeMillis()}'
-     * <br> #prefix - prefix value specified in the '{@link #print(String, String)}' method with 'String prefix' in the
-     * constructor
-     * <br> #logPointer - separating character ({@link #logPointer})
-     * <br> #message - input form the '{@link #print(String)}' method
-     * <br> #class - returns the name of the class which called the print method
-     * <br> #method - returns the name of the method which called the print method
-     * <br> #line - returns the the line which called the print method
-     * <br> #thread - thread from which the message is logged
-     *
-     * @see #print(String, String)
-     * @see #print(String)
-     * @see #getLogPatterns()
-     * @see #setLogPatterns(List)
-     */
     private static List<LogPattern> logPatterns = new ArrayList<>();
 
     private static Map<String, Measurement> measurements = new HashMap<>();
+
+    private static Map<LogLevel, LevelImplementation> levels = new HashMap<>();
 
     /**
      * Sets the default configuration for {@link #logPatterns}
@@ -69,6 +50,12 @@ public class Log
         logPatterns.add(new LogPattern(" #line"));
         logPatterns.add(new LogPattern(" / #file"));
         logPatterns.add(new LogPattern(" | #thread)"));
+
+        levels.put(LogLevel.TRACE, System.out::println);
+        levels.put(LogLevel.DEBUG, System.out::println);
+        levels.put(LogLevel.INFO, System.out::println);
+        levels.put(LogLevel.WARN, System.err::println);
+        levels.put(LogLevel.ERROR, System.err::println);
     }
 
     /**
@@ -202,20 +189,13 @@ public class Log
 
     public static void print(Map<String, String> logSections)
     {
-        System.out.println(FormatUtil.formatLog(logPatterns, logSections));
+        levels.get(LogLevel.INFO).log(FormatUtil.formatLog(logPatterns, logSections));
     }
 
-
-/*
-    public static void print(String input, Object... args)
+    public static void print(LogLevel level, Map<String, String> logSections)
     {
-        print(String.format(input, args));
+        levels.get(level).log(FormatUtil.formatLog(logPatterns, logSections));
     }
-
-    public static void print(String prefix, String input, Object... args)
-    {
-        print(prefix, String.format(input, args));
-    }*/
 
     /**
      * @return {@link #logPointer}
@@ -247,5 +227,11 @@ public class Log
     public static void setLogPatterns(List<LogPattern> logPatterns)
     {
         Log.logPatterns = logPatterns;
+    }
+
+    //TODO: doc
+    public static void registerLevel(LogLevel level, LevelImplementation implementation)
+    {
+        CollectionUtil.replaceOrPut(levels, level, implementation);
     }
 }
