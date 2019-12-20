@@ -31,7 +31,7 @@ public class ExitUtil
     {
         exitHandleRegistry.handleRegisteredEvents();
 
-        //TODO: Log.print("Exit", "Exiting with errorCode '" + errorCode + "'");
+        Log.print("Exit", "Exiting with errorCode '" + errorCode + "'");
 
         System.exit(errorCode);
     }

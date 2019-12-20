@@ -24,7 +24,7 @@ public class Exceptions
      */
     public static void handle(Exception e)
     {
-        //TODO: Log.print("Exception", e.getMessage());
+        Log.print("Exception", e.getMessage());
 
         e.printStackTrace();
     }
