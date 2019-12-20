@@ -12,5 +12,6 @@ import java.io.File;
 @FunctionalInterface
 public interface DirectoryIteratorFilter
 {
+    //TODO: Add javadoc
     Boolean predicate(File file);
 }

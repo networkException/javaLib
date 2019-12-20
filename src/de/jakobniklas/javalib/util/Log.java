@@ -15,6 +15,7 @@ import java.util.Objects;
  * Logging class, used to write to {@link System#out}
  *
  * @author Jakob-Niklas See
+ * //TODO: Add javadoc
  */
 public class Log
 {

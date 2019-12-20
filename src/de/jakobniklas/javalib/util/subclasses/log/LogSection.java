@@ -1,5 +1,6 @@
 package de.jakobniklas.javalib.util.subclasses.log;
 
+//TODO: Add javadoc
 public class LogSection
 {
     private String key;

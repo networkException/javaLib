@@ -128,6 +128,7 @@ public class FormatUtil
         return null;
     }
 
+    //TODO: rework
     /**
      * Expands string with space for a given amount of chars
      *
@@ -148,6 +149,7 @@ public class FormatUtil
         return input;
     }
 
+    //TODO: Add javadoc
     public static String formatLog(List<LogPattern> logPatterns, Map<String, String> sections)
     {
         //Print the mapped output of each pattern.

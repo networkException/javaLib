@@ -6,6 +6,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//TODO: Add javadoc
 public class RegexUtil
 {
     public static Iterable<MatchResult> allMatches(Pattern pattern, String input)

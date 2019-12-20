@@ -11,5 +11,6 @@ import java.io.File;
 @FunctionalInterface
 public interface DirectoryIterator
 {
+    //TODO: Add javadoc
     void file(File file);
 }
