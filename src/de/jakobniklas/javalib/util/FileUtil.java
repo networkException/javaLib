@@ -1,10 +1,10 @@
 package de.jakobniklas.javalib.util;
 
+import de.jakobniklas.javalib.exception.Exceptions;
 import de.jakobniklas.javalib.util.subclasses.file.DirectoryIterator;
 import de.jakobniklas.javalib.util.subclasses.file.DirectoryIteratorFilter;
 import de.jakobniklas.javalib.util.subclasses.file.FileInputIterator;
 import de.jakobniklas.javalib.util.subclasses.file.FileOutputIterator;
-import de.jakobniklas.javalib.exception.Exceptions;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -191,6 +191,32 @@ public class FileUtil
     public static void setTextContent(String filepath, String content)
     {
         setTextContent(new File(filepath), content);
+    }
+
+    /**
+     * Appends the given content to a file
+     *
+     * @param file    The file to write to
+     * @param content The content to write to the file
+     *
+     * @see #setTextContent(File, String)
+     */
+    public static void appendTextContent(File file, String content)
+    {
+        fileOutputIterator(file, new ArrayList<>(Collections.singleton(lineNumber -> content)), false);
+    }
+
+    /**
+     * Appends the given content to a file
+     *
+     * @param filepath The path and name of the file to write to
+     * @param content  The content to write to the file
+     *
+     * @see #setTextContent(File, String)
+     */
+    public static void appendTextContent(String filepath, String content)
+    {
+        appendTextContent(new File(filepath), content);
     }
 
     /**
