@@ -2,7 +2,6 @@ package de.jakobniklas.javalib.exception;
 
 import de.jakobniklas.javalib.JavaLibException;
 import de.jakobniklas.javalib.util.Log;
-import de.jakobniklas.javalib.util.subclasses.log.LogLevel;
 
 /**
  * Class to handle any {@link Exception Exception} occurring
@@ -25,7 +24,7 @@ public class Exceptions
      */
     public static void handle(Exception e)
     {
-        Log.print(LogLevel.ERROR, "Exception", e.getMessage());
+        Log.print("error", "Exception", e.getMessage());
 
         e.printStackTrace();
     }

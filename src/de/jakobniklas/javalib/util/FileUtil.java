@@ -22,15 +22,21 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Class to interact with the file system
  *
  * @author Jakob-Niklas See
- * @see #getTextContent(File)
- * @see #getTextContent(String)
- * @see #fileInputIterator(File, FileInputIterator)
- * @see #fileInputIterator(String, FileInputIterator)
- * @see #fileOutputIterator(File, List, Boolean)
- * @see #fileOutputIterator(String, List, Boolean)
- * @see #setTextContent(File, String)
- * @see #setTextContent(String, String)
- * @see #getAbsolutePath(String)
+ * @see #getTextContent(File) 
+ * @see #getTextContent(String) 
+ * @see #fileInputIterator(File, FileInputIterator) 
+ * @see #fileInputIterator(String, FileInputIterator) 
+ * @see #fileOutputIterator(File, List, Boolean) 
+ * @see #fileOutputIterator(String, List, Boolean) 
+ * @see #setTextContent(File, String) 
+ * @see #setTextContent(String, String) 
+ * @see #appendTextContent(File, String) 
+ * @see #appendTextContent(String, String) 
+ * @see #getAbsolutePath(String) 
+ * @see #directoryIterator(File, DirectoryIterator) 
+ * @see #directoryIterator(String, DirectoryIterator) 
+ * @see #directoryIterator(File, DirectoryIteratorFilter, DirectoryIterator) 
+ * @see #directoryIterator(String, DirectoryIteratorFilter, DirectoryIterator) 
  */
 public class FileUtil
 {

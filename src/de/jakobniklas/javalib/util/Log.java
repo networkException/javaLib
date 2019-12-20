@@ -34,7 +34,7 @@ public class Log
 
     private static Map<String, Measurement> measurements = new HashMap<>();
 
-    private static Map<LogLevel, LevelImplementation> levels = new HashMap<>();
+    private static Map<String, LevelImplementation> levels = new HashMap<>();
 
     /**
      * Sets the default configuration for {@link #logPatterns}
@@ -51,11 +51,11 @@ public class Log
         logPatterns.add(new LogPattern(" / #file"));
         logPatterns.add(new LogPattern(" | #thread)"));
 
-        levels.put(LogLevel.TRACE, System.out::println);
-        levels.put(LogLevel.DEBUG, System.out::println);
-        levels.put(LogLevel.INFO, System.out::println);
-        levels.put(LogLevel.WARN, System.err::println);
-        levels.put(LogLevel.ERROR, System.err::println);
+        levels.put("trace", System.out::println);
+        levels.put("debug", System.out::println);
+        levels.put("info", System.out::println);
+        levels.put("warn", System.err::println);
+        levels.put("error", System.err::println);
     }
 
     /**
@@ -234,12 +234,12 @@ public class Log
 
     public static void print(Map<String, String> logSections)
     {
-        levels.get(LogLevel.INFO).log(FormatUtil.formatLog(logPatterns, logSections));
+        levels.get("info").log(FormatUtil.formatLog(logPatterns, logSections));
     }
 
     public static void print(LogLevel level, Map<String, String> logSections)
     {
-        levels.get(level).log(FormatUtil.formatLog(logPatterns, logSections));
+        levels.get(level.getLevel()).log(FormatUtil.formatLog(logPatterns, logSections));
     }
 
     /**
@@ -277,6 +277,6 @@ public class Log
     //TODO: doc
     public static void registerLevel(LogLevel level, LevelImplementation implementation)
     {
-        CollectionUtil.replaceOrPut(levels, level, implementation);
+        CollectionUtil.replaceOrPut(levels, level.getLevel().toLowerCase(), implementation);
     }
 }
