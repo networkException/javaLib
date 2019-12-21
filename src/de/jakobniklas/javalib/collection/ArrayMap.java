@@ -1,5 +1,7 @@
 package de.jakobniklas.javalib.collection;
 
+import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +70,8 @@ public class ArrayMap<K, V>
     public void add(K key, V value)
     {
         if(!map.containsKey(key)) { map.put(key, new ArrayList<>()); }
-        else { map.get(key).add(value); }
+
+        map.get(key).add(value);
     }
 
     /**
