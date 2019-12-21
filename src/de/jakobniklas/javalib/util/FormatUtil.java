@@ -22,17 +22,10 @@ import java.util.stream.Collectors;
  * @see #isText(String)
  * @see #isNumeric(String)
  * @see #matchesRegex(String, String)
- * @see #spaceEscape
- * @see #spaceEscape
  * @see #streamToString(InputStream)
  */
 public class FormatUtil
 {
-    /**
-     * Escape token for spaces
-     */
-    public static String spaceEscape = "_/";
-
     /**
      * Returns boolean if a String can be parsed to a number, exception not handled
      *

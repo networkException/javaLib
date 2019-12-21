@@ -269,7 +269,7 @@ public class FileUtil
      */
     public static void directoryIterator(File directory, DirectoryIteratorFilter filter, DirectoryIterator iterator)
     {
-        Arrays.stream(Objects.requireNonNull(directory.listFiles())).filter(filter::predicate).forEach(iterator::file);
+        Arrays.stream(Objects.requireNonNull(directory.listFiles())).filter(filter::validate).forEach(iterator::file);
     }
 
     /**

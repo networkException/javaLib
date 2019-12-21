@@ -1,8 +1,9 @@
 package de.jakobniklas.javalib.util.subclasses.log;
 
+import de.jakobniklas.javalib.util.Log;
+
 /**
- * Class to define the pattern used in {@link de.jakobniklas.javalib.util.Log#print(String, String)}
- * Log.print()}
+ * Class to define the pattern used in {@link Log#print(String, String)}
  *
  * @author Jakob-Niklas See
  * @see #pattern
@@ -12,6 +13,7 @@ package de.jakobniklas.javalib.util.subclasses.log;
  * @see #setPattern(String)
  * @see #getLength()
  * @see #setLength(int)
+ * @see Log#defaultSections()
  */
 public class LogPattern
 {

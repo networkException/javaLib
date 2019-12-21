@@ -7,12 +7,13 @@ package de.jakobniklas.javalib.exception;
  * @author Jakob-Niklas See
  * @see #handle(Exception)
  */
-public abstract class ExceptionHandleEvent
+@FunctionalInterface
+public interface ExceptionHandleEvent
 {
     /**
-     * The handler method to be implemented
+     * The handler method to be implemented (can be a lambda expression)
      *
      * @param e the exception which should be handled
      */
-    public abstract void handle(Exception e);
+    void handle(Exception e);
 }
