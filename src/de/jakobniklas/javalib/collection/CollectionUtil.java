@@ -1,9 +1,9 @@
 package de.jakobniklas.javalib.collection;
 
-import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
+    import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
 
-import java.util.List;
-import java.util.Map;
+    import java.util.List;
+    import java.util.Map;
 
 /**
  * Class for Collection Framework formatting and quick actions
@@ -55,8 +55,6 @@ public class CollectionUtil
      */
     public static <T> T getOrDefault(List<T> list, Integer index, T defaultValue)
     {
-        T value = list.get(index);
-
-        return value != null ? value : defaultValue;
+        return (index >= 0) && (index < list.size()) ? list.get(index) : defaultValue;
     }
 }
