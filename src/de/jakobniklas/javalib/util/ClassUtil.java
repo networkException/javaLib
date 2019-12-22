@@ -1,6 +1,7 @@
 package de.jakobniklas.javalib.util;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Utilities class for Class related operations
@@ -111,14 +112,10 @@ public class ClassUtil
      */
     public static StackTraceElement firstNotClassElement(String... classNames)
     {
-        for(StackTraceElement element : Thread.currentThread().getStackTrace())
-        {
-            if(!Arrays.asList(classNames).contains(element.getClassName()))
-            {
-                return element;
-            }
-        }
+        List<String> classes = Arrays.asList(classNames);
 
-        return getStackTraceElement(1);
+        return Arrays.stream(Thread.currentThread().getStackTrace())
+            .filter((element) -> !classes.contains(element.getClassName()))
+            .findAny().orElseGet(() -> getStackTraceElement(1));
     }
 }
