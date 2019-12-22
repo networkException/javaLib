@@ -44,4 +44,19 @@ public class CollectionUtil
         if(!list.contains(value)) {list.add(value);}
         else {implementation.or((List<Object>) list, value);}
     }
+
+    /**
+     * Gets a value from a list, if the value is not in the list returns the default value.
+     *
+     * @param list         The list to be operated on
+     * @param index        The index where the value should be
+     * @param defaultValue The value which should be returned when no value is present
+     * @param <T>          The type of the values in the list
+     */
+    public static <T> T getOrDefault(List<T> list, Integer index, T defaultValue)
+    {
+        T value = list.get(index);
+
+        return value != null ? value : defaultValue;
+    }
 }
