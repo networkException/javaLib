@@ -24,10 +24,7 @@ public class TimeUtil
      */
     public static String format(String format)
     {
-        Calendar calender = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-
-        return simpleDateFormat.format(calender.getTime());
+        return new SimpleDateFormat(format).format(Calendar.getInstance().getTime());
     }
 
     /**
