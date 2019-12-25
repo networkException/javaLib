@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
  * @see #isNumeric(String)
  * @see #matchesRegex(String, String)
  * @see #streamToString(InputStream)
+ * @see #padRight(String, Integer)
+ * @see #padLeft(String, Integer)
+ * @see #formatLog(List, Map)
  */
 public class FormatUtil
 {
@@ -121,28 +124,46 @@ public class FormatUtil
         return null;
     }
 
-    //TODO: rework
     /**
-     * Expands string with space for a given amount of chars
+     * Expands string with space for a given amount of chars to the right
      *
-     * @param input       The base string
-     * @param totalLength The amount of spaces
+     * @param input  The base string
+     * @param length The amount of spaces
      *
      * @return The base string with the spaces appended
      */
-    public static String expandString(String input, int totalLength)
+    public static String padRight(String input, Integer length)
     {
-        totalLength = totalLength - input.length();
-
-        for(int i = 0; i < totalLength; i++)
-        {
-            input = input.concat(" ");
-        }
-
-        return input;
+        return String.format("%-" + length + "." + length + "s", input);
     }
 
-    //TODO: Add javadoc
+    /**
+     * Expands string with space for a given amount of chars to the left
+     *
+     * @param input  The base string
+     * @param length The amount of spaces
+     *
+     * @return The base string with the spaces appended
+     */
+    public static String padLeft(String input, Integer length)
+    {
+        return String.format("%" + length + "." + length + "s", input);
+    }
+
+    /**
+     * Formats a given list of sections to a given set of patterns. As used in {@link Log}, this formats a given map of
+     * sections (The key representing the value in the pattern which should be replaced and the value the string which
+     * should be inserted). The each element in the logPattern represents a section in the output. The logPattern should
+     * therefor be stored globally, to allow formatted output according to the longest version of a section so far.
+     * Technically does it not matter what keys are used, as a regex match finds the keys dynamically.
+     * <p>
+     * In the pattern, replaceable keys are defined as follows: {@code "text #key text"}
+     *
+     * @param logPatterns The pattern defining the outputs arrangement as well as incrementation
+     * @param sections    The sections defining values of keys defined in the pattern
+     *
+     * @return A formatted String
+     */
     public static String formatLog(List<LogPattern> logPatterns, Map<String, String> sections)
     {
         //Print the mapped output of each pattern.
@@ -168,7 +189,7 @@ public class FormatUtil
             }
 
             //Return the string with added spaces
-            return expandString(pattern.get(), logPattern.getLength());
+            return padRight(pattern.get(), logPattern.getLength());
         }).collect(Collectors.joining());
     }
 }
