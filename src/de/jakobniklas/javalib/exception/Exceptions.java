@@ -55,11 +55,10 @@ public class Exceptions
 
     /**
      * Handles exception occurring by accepting a message and throwing a new {@link
-     * de.jakobniklas.javalib.JavaLibException JavaLibException} and {@link
-     * de.jakobniklas.javalib.util.Log logging} with the parameter 'Exception'
+     * de.jakobniklas.javalib.JavaLibException JavaLibException} and {@link de.jakobniklas.javalib.util.Log logging}
+     * with the parameter 'Exception'
      *
-     * @param message message for the {@link de.jakobniklas.javalib.JavaLibException
-     *                JavaLibException}
+     * @param message message for the {@link de.jakobniklas.javalib.JavaLibException JavaLibException}
      */
     public static void handle(String message)
     {

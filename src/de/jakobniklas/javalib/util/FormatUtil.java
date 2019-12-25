@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * @see #isBoolean(String)
  * @see #isText(String)
  * @see #isNumeric(String)
- * @see #matchesRegex(String, String)
  * @see #streamToString(InputStream)
  * @see #padRight(String, Integer)
  * @see #padLeft(String, Integer)
@@ -79,21 +78,6 @@ public class FormatUtil
     public static boolean isBoolean(String string)
     {
         return string.equals("true") || string.equals("false");
-    }
-
-    /**
-     * Returns boolean if a String matches a regular expression
-     *
-     * @param string given input
-     * @param regex  the regular expression to be matched with
-     *
-     * @return boolean if the input matches a regular expression
-     * <p>
-     * - wrapper for {@code string.matches(regex);}
-     */
-    public static boolean matchesRegex(String string, String regex)
-    {
-        return string.matches(regex);
     }
 
     /**
@@ -173,7 +157,7 @@ public class FormatUtil
             AtomicReference<String> pattern = new AtomicReference<>(logPattern.getPattern() == null ? "null" : logPattern.getPattern());
 
             //Find a reference to the section in the pattern and replace the value
-            RegexUtil.allMatches(Pattern.compile("#([a-zA-Z])+"), logPattern.getPattern()).forEach((foundMatch) ->
+            RegexUtil.allMatches("#([a-zA-Z])+", logPattern.getPattern()).forEach((foundMatch) ->
                 pattern.set(pattern.get().replace(foundMatch.group(),
                     sections.get(foundMatch.group().substring(1)) == null ? "null" : sections.get(foundMatch.group().substring(1)))));
 

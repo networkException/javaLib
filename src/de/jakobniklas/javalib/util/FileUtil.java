@@ -84,20 +84,20 @@ public class FileUtil
     {
         try
         {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             int count = 0;
 
-            while((line = br.readLine()) != null)
+            while((line = bufferedReader.readLine()) != null)
             {
                 iterator.action(line, count);
 
                 count++;
             }
 
-            fr.close();
-            br.close();
+            fileReader.close();
+            bufferedReader.close();
         }
         catch(Exception e)
         {

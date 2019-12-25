@@ -1,7 +1,5 @@
 package de.jakobniklas.javalib.collection;
 
-import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

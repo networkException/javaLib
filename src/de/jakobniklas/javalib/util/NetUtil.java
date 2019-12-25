@@ -10,8 +10,8 @@ import java.net.URLConnection;
  * Class for network related actions
  *
  * @author Jakob-Niklas See
- * @see #getURLSource(String) (String)
- * @see #getURLSource(URL) (URL)
+ * @see #getURLSource(String)
+ * @see #getURLSource(URL)
  */
 public class NetUtil
 {

@@ -1,9 +1,9 @@
 package de.jakobniklas.javalib.collection;
 
-    import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
+import de.jakobniklas.javalib.collection.subclasses.ListOrImplementation;
 
-    import java.util.List;
-    import java.util.Map;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class for Collection Framework formatting and quick actions
